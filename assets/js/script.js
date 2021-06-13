@@ -1,112 +1,49 @@
-// // Creating and using arrays and objects
-// // Creating and using functions
-// // Using events (eg. load event)
-// // Adding user input such as radio buttons
-// // Using for loops to repeat code
-// // Using if statements to test conditions
 
-// var pos = 0;
-// var correct = 0;
-// var test, test_status, question, choice, choices, chA, chB, chC;
-
-// // this is a multidimensional array with 4 inner array elements with 5 elements inside them
-var questions = [
-  {
-      question: "What is 36 + 42",
-      a: "64",
-      b: "78",
-      c: "76",
-      answer: "B"
-    },
-  {
-      question: "What is 7 x 4?",
-      a: "21",
-      b: "27",
-      c: "28",
-      answer: "C"
-    },
-  {
-      question: "What is 16 / 4?",
-      a: "4",
-      b: "6",
-      c: "3",
-      answer: "A"
-    },
-  {
-      question: "What is 8 x 12?",
-      a: "88",
-      b: "112",
-      c: "96",
-      answer: "C"
-    }
-  ];
-
-//   function get(x){
-//     return document.getElementById(x);
-//   }
-
-//   // this function renders a question for display on the page
-// function renderQuestion(){
-//   test = get("test");
-//   if(pos >= questions.length){
-//     test.innerHTML = "<h2>You got "+correct+" of "+questions.length+" questions correct</h2>";
-//     get("test_status").innerHTML = "Test completed";
-//     // resets the variable to allow users to restart the test
-//     pos = 0;
-//     correct = 0;
-//     // stops rest of renderQuestion function running when test is completed
-//     return false;
-//   }
-//   get("test_status").innerHTML = "Question "+(pos+1)+" of "+questions.length;
-  
-//   question = questions[pos].question;
-//   chA = questions[pos].a;
-//   chB = questions[pos].b;
-//   chC = questions[pos].c;
-//   // display the question
-//   test.innerHTML = "<h3>"+question+"</h3>";
-//   // display the answer options
-//   // the += appends to the data we started on the line above
-//   test.innerHTML += "<label> <input type='radio' name='choices' value='A'> "+chA+"</label><br>";
-//   test.innerHTML += "<label> <input type='radio' name='choices' value='B'> "+chB+"</label><br>";
-//   test.innerHTML += "<label> <input type='radio' name='choices' value='C'> "+chC+"</label><br><br>";
-//   test.innerHTML += "<button onclick='checkAnswer()'>Submit Answer</button>";
-// }
-
-// function checkAnswer(){
-//   // use getElementsByName because we have an array which it will loop through
-//   choices = document.getElementsByName("choices");
-//   for(var i=0; i<choices.length; i++){
-//     if(choices[i].checked){
-//       choice = choices[i].value;
-//     }
-//   }
-//   // checks if answer matches the correct choice
-//   if(choice == questions[pos].answer){
-//     //each time there is a correct answer this value increases
-//     correct++;
-//   }
-//   // changes position of which character user is on
-//   pos++;
-//   // then the renderQuestion function runs again to go to next question
-//   renderQuestion();
-// }
-
-// // Add event listener to call renderQuestion on page load event
-// window.addEventListener("load", renderQuestion);
-
-
-//
 
 //so we have a button, now lets add the timer.
 //timer added from our exercise in week 4
+var questions = [
+  {
+      question: " Which of the following is not JavaScript Data Types?",
+      a: "Number",
+      b: "Float",
+      c: "Undefined",
+      answer: "B"
+    },
+  {
+      question: "Which company developed JavaScript?",
+      a: "IBM",
+      b: "Bell Labs",
+      c: "Netscape",
+      answer: "C"
+    },
+  {
+      question: "Inside which HTML element do we put the JavaScript?",
+      a: "<script>",
+      b: "<head>",
+      c: "<style>",
+      answer: "A"
+    },
+  {
+      question: " Which of the following is correct about features of JavaScript?",
+      a: "It can not Handling dates and time.",
+      b: "JavaScript is not interpreter based scripting language.",
+      c: "JavaScript is a object-based scripting language.",
+      answer: "C"
+    }
+  ];
 var questionNum = 0;
 var timerEl = document.getElementById('countdown');
 var mainEl = document.getElementById('main');
 var startBtn = document.getElementById('save-task');
 var answerA = document.getElementById("a")
+var answerB = document.getElementById("b")
+var answerC = document.getElementById("c")
 var question = document.getElementById("question")
 var questionBlock = document.getElementById("questions")
+var score = 0
+var timeLeft = 0
+
 
 var message =
   'Game Over';
@@ -130,20 +67,36 @@ console.log(questions[questionNum])
 
     document.getElementById("question").textContent = questions[questionNum].question
     answerA.textContent = questions[questionNum].a
-    document.getElementById("b").textContent = questions[questionNum].b
-    document.getElementById("c").textContent = questions[questionNum].c
+    answerB.textContent = questions[questionNum].b
+    answerC.textContent = questions[questionNum].c
+    questions[questionNum].answer
+    
     answerA.onclick = checkAnswer
-
+    answerB.onclick = checkAnswer
+    answerC.onclick = checkAnswer
   }
 }
 
 function checkAnswer(){
   console.log("answer was checked")
+  console.log(this.id)
+  if (this.id === questions[questionNum].answer.toLowerCase()) {
+    console.log("answer is correct")
+    score += 10;
+  } else {
+timeLeft -= 10
+  }
+  
+
   questionNum++
   renderQuestions()
 }
+
+
 function endQuiz(){
   questionBlock.style.visibility="hidden"
+  document.getElementById("hight-score").style.visibility ="visible";
+
   console.log("quize has ended");
   }
 
@@ -153,7 +106,7 @@ function endQuiz(){
 
 // Timer that counts down from 5
 function countdown() {
-  var timeLeft = 5;
+  timeLeft = 500;
 
   // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
   var timeInterval = setInterval(function() {
@@ -178,9 +131,14 @@ function countdown() {
     }
   }, 1000);
 }
+// highScore = {
+//   initials: initials,
+//   score: score
+// }
 
-
-
+// highScoreList = localStorage.getItem(highScore)
+// highScoreList.push(highScore)
+// localStorage.setItem(highScoreList)
 
 // Displays the message one word at a time
 function displayMessage() {
@@ -196,6 +154,8 @@ function displayMessage() {
     }
   }, 300);
 }
+
+
 
 
 
